@@ -1,3 +1,2 @@
 app/etc/modules/Aoe_TemplateImport.xml                      app/etc/modules/Aoe_TemplateImport.xml
 app/code/community/Aoe/TemplateImport/                      app/code/community/Aoe/TemplateImport/
-app/design/frontend/base/default/layout/aoe_templateimport/ app/design/frontend/base/default/layout/aoe_templateimport/
