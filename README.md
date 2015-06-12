@@ -6,6 +6,7 @@ This module is useful when you have non-magento frontend and magento is being us
 In this case, instead of modifying the header/footer in magento to match the frontend site, use html file which contains header and footer with placeholders.
 
 Placeholders Example:
+```
 - <!-- ###head### -->
 - <!-- ###after_body_start### -->
 - <!-- ###global_notices### -->
@@ -16,8 +17,10 @@ Placeholders Example:
 - <!-- ###footer### -->
 - <!-- ###global_cookie_notice### -->
 - <!-- ###before_body_end### -->
+```
 
 Template Example:
+```
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head lang="en">
@@ -36,12 +39,20 @@ Template Example:
         </div>
     </body>
 </html>
+```
+Configuration Setting:
+```
+Admin > System > Configuration > GENERAL > Design > Aoe Template Import
+```
 
-Configuration Setting: Admin > System > Configuration > GENERAL > Design > Aoe Template Import
-
-Format: [handler];[template path];[cache lifetime in secs]
+Format:
+```
+[handler];[template path];[cache lifetime in secs]
+```
 
 Example:
+```
 - checkout_cart_index;/var/www/project/cart.html;60
 - checkout_cart_*;/var/www/project/cart.html;60
 - *;/var/www/project/default.html;60
+```
