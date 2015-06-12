@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Template import
+ *
+ * @author Manish Jain
+ */
+-->
+<config>
+    <modules>
+        <Aoe_TemplateImport>
+            <version>0.1.0</version>
+        </Aoe_TemplateImport>
+    </modules>
+    <global>
+        <blocks>
+            <aoe_templateimport>
+                <class>Aoe_TemplateImport_Block</class>
+            </aoe_templateimport>
+            <page>
+                <rewrite>
+                    <html>Aoe_TemplateImport_Block_Html</html>
+                </rewrite>
+            </page>
+        </blocks>
+        <helpers>
+            <aoe_templateimport>
+                <class>Aoe_TemplateImport_Helper</class>
+            </aoe_templateimport>
+        </helpers>
+    </global>
+</config>
