@@ -1,6 +1,6 @@
 <?php
 
-class Aoe_TemplateImport_Block_Html extends Mage_Core_Block_Template
+class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
 {
     /**
      * Render the page html
@@ -17,7 +17,6 @@ class Aoe_TemplateImport_Block_Html extends Mage_Core_Block_Template
         if (!$this->helper('aoe_templateimport')->isEnabled()) {
             return parent::_toHtml();
         }
-        $this->setAttribute('ignore', 1);
         $source = $this->getSource();
         if (empty($source)) {
             return parent::_toHtml();
@@ -50,7 +49,7 @@ class Aoe_TemplateImport_Block_Html extends Mage_Core_Block_Template
                 )
             ));
         }
-        return file_get_contents($filePath, false, $context);
+        return @file_get_contents($filePath, false, $context);
     }
 
     /**
