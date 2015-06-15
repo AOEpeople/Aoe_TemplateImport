@@ -27,7 +27,12 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
                 return $page->getChildHtml($matches[1]);
             }, $source);
 
-        return $source;
+        /* @var $helper Mage_Cms_Helper_Data */
+        $helper = Mage::helper('cms');
+        $processor = $helper->getBlockTemplateProcessor();
+        $html = $processor->filter($source);
+
+        return $html;
     }
 
     /**
