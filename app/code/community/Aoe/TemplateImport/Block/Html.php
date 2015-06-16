@@ -2,106 +2,109 @@
 
 class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
 {
+
+    protected $config;
+
     /**
      * Render the page html
-     * Supports different placeholders:
-     * - <!-- ###head### -->
-     * - <!-- ###content### -->
-     * - <!-- ###footer### -->
-     *
      * Renders all placeholders inside the page.
      *
      * @return string
      */
-    protected function _toHtml() {
+    protected function _toHtml()
+    {
         if (!$this->helper('aoe_templateimport')->isEnabled()) {
             return parent::_toHtml();
         }
+
         $source = $this->getSource();
-        if (empty($source)) {
-            return parent::_toHtml();
+
+        $config = $this->getConfig();
+
+        // preprocessing relative paths
+        $basepath = $config['basepath'];
+        if (!empty($basepath)) {
+            $basepath = rtrim($basepath, '/');
+            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)="(.+)"/', function ($matches) use ($basepath) {
+                $href = $matches[4];
+                if (!preg_match('%^https?://%', $href)) {
+                    $href = ltrim($href, '/');
+                    $href = $basepath . '/' . $href;
+                }
+
+                return '<' . $matches[1] . $matches[2] . $matches[3] . '="' . $href . '"';
+            }, $source);
         }
 
+        // insert blocks
         $page = $this;
-        $source = preg_replace_callback('/<!-- ###(\w+)### -->/', function($matches) use($page){
-                return $page->getChildHtml($matches[1]);
-            }, $source);
+        $source = preg_replace_callback('/<!--\s*###(.+)###\s*-->(.*)<!--\s*###\/\1###\s*-->/s', function ($matches) use ($page) {
+            return $page->getChildHtml($matches[1]);
+        }, $source);
 
-        /* @var $helper Mage_Cms_Helper_Data */
-        $helper = Mage::helper('cms');
-        $processor = $helper->getBlockTemplateProcessor();
-        $html = $processor->filter($source);
-
-        return $html;
+        return $source;
     }
 
     /**
      * @author Manish Jain <manish.jain@aoe.com>
      * @return string
      */
-    public function getSource() {
-        $filePath = $this->getFilePath();
-        if (empty($filePath)) {
-            return $filePath;
-        }
+    public function getSource()
+    {
+        $config = $this->getConfig();
+
+        $filePath = $config['path'];
         $context = null;
-        if (preg_match('%^((http(s)?://)|(www\.))([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i', $filePath)) {
+
+        // check if this is a url
+        if (preg_match('%^https?://%i', $filePath)) {
             $username = $this->helper('aoe_templateimport')->getHttpUsername();
             $password = $this->helper('aoe_templateimport')->getHttpPassword();
-            $context = stream_context_create(array(
-                'http' => array(
-                    'header'  => "Authorization: Basic " . base64_encode("$username:$password")
-                )
-            ));
+            if (!empty($username) && !empty($password)) {
+                $context = stream_context_create(array('http' => array('header' => "Authorization: Basic " . base64_encode("$username:$password"))));
+            }
         }
+
         return @file_get_contents($filePath, false, $context);
     }
 
     /**
+     * Find the first configuration where the current full action name matches the pattern
+     *
      * @author Manish Jain <manish.jain@aoe.com>
-     * @return string
+     * @return array
      */
-    public function getFilePath() {
-        $currentHandlers = $this->getCurrentHandler();
-        $templatePaths = $this->helper('aoe_templateimport')->getTemplatePaths();
-        if (count(array_filter($templatePaths))) {
-            foreach ($templatePaths as $templatePath) {
-                list($handler, $filePath, $cacheLifetime) = explode(';', $templatePath);
-                foreach ($currentHandlers as $currentHandler) {
-                    if ($handler == $currentHandler || $handler == '*') {
-                        $this->setCacheLifetime($cacheLifetime);
-                        return $filePath;
-                    }
+    public function getConfig()
+    {
+        if (is_null($this->config)) {
+            $this->config = false;
+            $fullActionName = $this->getFullActionName();
+            $templateConfig = $this->helper('aoe_templateimport')->getTemplateConfig();
+            foreach ($templateConfig as $pattern => $config) {
+                if (preg_match('/' . $pattern . '/', $fullActionName)) {
+                    $this->config = $config;
+                    break;
                 }
             }
         }
-        return '';
+
+        return $this->config;
     }
 
     /**
+     * Get full actio name
+     *
      * @author Manish Jain <manish.jain@aoe.com>
      * @return string
      */
-    public function getCurrentHandler() {
-        /**
-         * get Router name
-         */
+    public function getFullActionName()
+    {
         $route = $this->getRequest()->getRouteName();
-        /**
-         * get Controller name
-         */
         $controller = $this->getRequest()->getControllerName();
-        /**
-         * get Action name, i.e. the function inside the controller
-         */
         $action = $this->getRequest()->getActionName();
+        $fullActionName = $route . '_' . $controller . '_' . $action;
 
-        $currentHandlers = array();
-        $currentHandlers[] = $route.'_'.$controller.'_'.$action;
-        $currentHandlers[] = $route.'_'.$controller.'_*';
-
-        return $currentHandlers;
+        return $fullActionName;
     }
-
 
 }

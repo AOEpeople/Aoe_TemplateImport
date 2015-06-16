@@ -17,14 +17,24 @@ class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Get template path
+     * Get template config
      *
      * @return string
      */
-    public function getTemplatePaths()
+    public function getTemplateConfig()
     {
-        $templatePaths = explode(PHP_EOL, preg_replace('/\R/', PHP_EOL, Mage::getStoreConfig('design/aoe_templateimport/template_paths')));
-        return $templatePaths;
+        $configString = Mage::getStoreConfig('design/aoe_templateimport/template_paths');
+        $lines = $this->trimExplode("\n", $configString, true);
+        $config = array();
+        foreach ($lines as $line) {
+            list($pattern, $path, $basepath, $lifetime) = $this->trimExplode(';', $line);
+            $config[$pattern] = array(
+                'path' => $path,
+                'lifetime' => $lifetime,
+                'basepath' => $basepath
+            );
+        }
+        return $config;
     }
 
     /**
@@ -45,6 +55,35 @@ class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
     public function getHttpPassword()
     {
         return Mage::getStoreConfig('design/aoe_templateimport/http_password');
+    }
+
+    /**
+     * Explodes a string and trims all values for whitespace in the ends.
+     * If $onlyNonEmptyValues is set, then all blank ('') values are removed.
+     *
+     * @see t3lib_div::trimExplode() in TYPO3
+     * @param $delim
+     * @param string $string
+     * @param bool $removeEmptyValues If set, all empty values will be removed in output
+     * @return array Exploded values
+     */
+    public function trimExplode($delim, $string, $removeEmptyValues = false)
+    {
+        $explodedValues = explode($delim, $string);
+
+        $result = array_map('trim', $explodedValues);
+
+        if ($removeEmptyValues) {
+            $temp = array();
+            foreach ($result as $value) {
+                if ($value !== '') {
+                    $temp[] = $value;
+                }
+            }
+            $result = $temp;
+        }
+
+        return $result;
     }
 
 }
