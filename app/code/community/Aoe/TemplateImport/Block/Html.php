@@ -13,6 +13,7 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
      */
     protected function _toHtml()
     {
+
         if (!$this->helper('aoe_templateimport')->isEnabled()) {
             return parent::_toHtml();
         }
