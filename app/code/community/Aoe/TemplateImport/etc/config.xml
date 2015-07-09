@@ -4,12 +4,13 @@
  * Template import
  *
  * @author Manish Jain
+ * @author Fabrizio Branca
  */
 -->
 <config>
     <modules>
         <Aoe_TemplateImport>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </Aoe_TemplateImport>
     </modules>
     <global>
