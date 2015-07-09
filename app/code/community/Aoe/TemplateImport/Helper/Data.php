@@ -29,12 +29,29 @@ class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($lines as $line) {
             list($pattern, $path, $basepath, $lifetime) = $this->trimExplode(';', $line);
             $config[$pattern] = array(
-                'path' => $path,
+                'path' => $this->replacePlaceholders($path),
                 'lifetime' => $lifetime,
-                'basepath' => $basepath
+                'basepath' => $this->replacePlaceholders($basepath)
             );
         }
         return $config;
+    }
+
+    /**
+     * Replaces:
+     * ###BASE_URL###
+     * ###MAGENTO_ROOT###
+     *
+     * @var string $string
+     * @return string
+     */
+    protected function replacePlaceholders($string)
+    {
+        $replace = array(
+            '###BASE_URL###' => Mage::getBaseUrl(),
+            '###MAGENTO_ROOT###' => MAGENTO_ROOT
+        );
+        return str_replace(array_keys($replace), array_values($replace), $string);
     }
 
     /**

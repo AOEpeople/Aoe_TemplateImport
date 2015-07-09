@@ -30,7 +30,7 @@
                         <template_paths translate="label">
                             <label>Template Configuration</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment><![CDATA[Newline separated list of template paths. Format: [regex pattern for full action name];[template path];[base path];[cache lifetime in secs]. Ex: checkout_cart_index;/var/www/project/cart.html;;60]]></comment>
+                            <comment><![CDATA[Newline separated list of template paths. Format: [regex pattern for full action name];[template path];[base path];[cache lifetime in secs]. Ex: checkout_cart_index;/var/www/project/cart.html;;60]]<br />Supports following placeholders: ###BASE_URL###, ###MAGENTO_ROOT### ></comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

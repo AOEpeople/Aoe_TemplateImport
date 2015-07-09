@@ -46,3 +46,7 @@ Example:
 - checkout_cart_.*;/var/www/project/cart.html;;60
 - .*;/var/www/project/default.html;;60
 ```
+
+Supported placeholders for template path and base path:
+- ###BASE_URL###
+- ###MAGENTO_ROOT###
