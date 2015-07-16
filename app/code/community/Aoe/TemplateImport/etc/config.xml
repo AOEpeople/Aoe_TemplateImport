@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Aoe_TemplateImport>
-            <version>0.2.2</version>
+            <version>0.2.3</version>
         </Aoe_TemplateImport>
     </modules>
     <global>

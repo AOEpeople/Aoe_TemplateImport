@@ -59,7 +59,7 @@ Supported placeholders for template path and base path:
 
 ## Changelog
 
-* 0.2.2: Added info for empty config or content when in dev mode
+* 0.2.3: Added info for empty config or content when in dev mode
 * 0.2.1: Support single quotes
 * 0.2.0: Added placeholder support
 * 0.1.0: Initial release
