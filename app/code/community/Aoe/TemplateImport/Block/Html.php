@@ -18,9 +18,23 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
             return parent::_toHtml();
         }
 
-        $source = $this->getSource();
-
         $config = $this->getConfig();
+        if (!$config) {
+            if (Mage::getIsDeveloperMode()) {
+                return '[no config found for "' . $this->getFullActionName() . '"]';
+            } else {
+                return '';
+            }
+        }
+
+        $source = $this->getSource();
+        if (trim($source) === '') {
+            if (Mage::getIsDeveloperMode()) {
+                return '[Source for "' . $config['path'] . '" is empty]';
+            } else {
+                return '';
+            }
+        }
 
         // preprocessing relative paths
         $basepath = $config['basepath'];
