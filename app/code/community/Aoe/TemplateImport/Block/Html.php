@@ -26,14 +26,14 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
         $basepath = $config['basepath'];
         if (!empty($basepath)) {
             $basepath = rtrim($basepath, '/');
-            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)="(.+)"/', function ($matches) use ($basepath) {
-                $href = $matches[4];
-                if (!preg_match('%^https?://%', $href)) {
-                    $href = ltrim($href, '/');
-                    $href = $basepath . '/' . $href;
+            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)=("|\')(.+)("|\')/', function ($matches) use ($basepath) {
+                $url = $matches[5];
+                if (!preg_match('%^(https?:)?//%', $url)) {
+                    $url = ltrim($url, '/');
+                    $url = $basepath . '/' . $url;
                 }
 
-                return '<' . $matches[1] . $matches[2] . $matches[3] . '="' . $href . '"';
+                return '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . $url . $matches[6];
             }, $source);
         }
 
