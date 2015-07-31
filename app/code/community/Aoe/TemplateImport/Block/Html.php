@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class Aoe_TemplateImport_Block_Html
+ *
+ * @author Manish Jain
+ * @author Fabrizio Branca
+ */
 class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
 {
 
@@ -13,7 +19,6 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
      */
     protected function _toHtml()
     {
-
         if (!$this->helper('aoe_templateimport')->isEnabled()) {
             return parent::_toHtml();
         }
@@ -27,29 +32,7 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
             }
         }
 
-        $source = $this->getSource();
-        if (trim($source) === '') {
-            if (Mage::getIsDeveloperMode()) {
-                return '[Source for "' . $config['path'] . '" is empty]';
-            } else {
-                return '';
-            }
-        }
-
-        // preprocessing relative paths
-        $basepath = $config['basepath'];
-        if (!empty($basepath)) {
-            $basepath = rtrim($basepath, '/');
-            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)=("|\')(.+)("|\')/', function ($matches) use ($basepath) {
-                $url = $matches[5];
-                if (!preg_match('%^(https?:)?//%', $url)) {
-                    $url = ltrim($url, '/');
-                    $url = $basepath . '/' . $url;
-                }
-
-                return '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . $url . $matches[6];
-            }, $source);
-        }
+        $source = $this->getSource($config);
 
         // insert blocks
         $page = $this;
@@ -61,32 +44,78 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
     }
 
     /**
-     * @author Manish Jain <manish.jain@aoe.com>
+     * Get source
+     *
+     * @param array $config
      * @return string
      */
-    public function getSource()
+    public function getSource(array $config)
     {
-        $config = $this->getConfig();
+        $cache = Mage::app()->getCacheInstance();
+        $cacheKey = Mage::app()->getStore()->getCode() . '_' . md5(implode(';', $config));
+        $lifetime = intval($config['lifetime']);
 
-        $filePath = $config['path'];
-        $context = null;
+        if ($lifetime == 0 || !$source = $cache->load($cacheKey)) {
 
-        // check if this is a url
-        if (preg_match('%^https?://%i', $filePath)) {
-            $username = $this->helper('aoe_templateimport')->getHttpUsername();
-            $password = $this->helper('aoe_templateimport')->getHttpPassword();
-            if (!empty($username) && !empty($password)) {
-                $context = stream_context_create(array('http' => array('header' => "Authorization: Basic " . base64_encode("$username:$password"))));
+            $filePath = $config['path'];
+            $context = null;
+
+            // check if this is a url
+            if (preg_match('%^https?://%i', $filePath)) {
+                $helper = $this->helper('aoe_templateimport'); /* @var $helper Aoe_TemplateImport_Helper_Data */
+                $username = $helper->getHttpUsername();
+                $password = $helper->getHttpPassword();
+                if (!empty($username) && !empty($password)) {
+                    $context = stream_context_create(array('http' => array('header' => "Authorization: Basic " . base64_encode("$username:$password"))));
+                }
+            }
+
+            $source = @file_get_contents($filePath, false, $context);
+
+            if (trim($source) === '') {
+                if (Mage::getIsDeveloperMode()) {
+                    return '[Source for "' . $config['path'] . '" is empty]';
+                } else {
+                    return '';
+                }
+            }
+
+            if (!empty($config['basepath'])) {
+                $source = $this->convertRelativePaths($source, $config['basepath']);
+            }
+
+            if ($lifetime > 0) {
+                $cache->save($source, $cacheKey, array('aoe_templateimport'), $lifetime);
             }
         }
+        return $source;
+    }
 
-        return @file_get_contents($filePath, false, $context);
+    /**
+     * Convert relative paths
+     *
+     * @param $source
+     * @param $basepath
+     * @return mixed
+     */
+    public function convertRelativePaths($source, $basepath) {
+        if (!empty($basepath)) {
+            $basepath = rtrim($basepath, '/');
+            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)=("|\')(.+)("|\')/', function ($matches) use ($basepath) {
+                $url = $matches[5];
+                if (!preg_match('%^(https?:)?//%', $url)) {
+                    $url = ltrim($url, '/');
+                    $url = $basepath . '/' . $url;
+                }
+                return '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . $url . $matches[6];
+            }, $source);
+        }
+        return $source;
     }
 
     /**
      * Find the first configuration where the current full action name matches the pattern
      *
-     * @author Manish Jain <manish.jain@aoe.com>
      * @return array
      */
     public function getConfig()
@@ -102,14 +131,12 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
                 }
             }
         }
-
         return $this->config;
     }
 
     /**
-     * Get full actio name
+     * Get full actioname
      *
-     * @author Manish Jain <manish.jain@aoe.com>
      * @return string
      */
     public function getFullActionName()
@@ -118,7 +145,6 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
         $controller = $this->getRequest()->getControllerName();
         $action = $this->getRequest()->getActionName();
         $fullActionName = $route . '_' . $controller . '_' . $action;
-
         return $fullActionName;
     }
 
