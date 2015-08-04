@@ -25,6 +25,7 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
 
         $config = $this->getConfig();
         if (!$config) {
+            Mage::log('[Aoe_TemplateImport] No configuration found for: ' . $this->getFullActionName(), Zend_Log::ERR);
             if (Mage::getIsDeveloperMode()) {
                 return '[no config found for "' . $this->getFullActionName() . '"]';
             } else {
@@ -73,11 +74,14 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
             $source = @file_get_contents($filePath, false, $context);
 
             if (trim($source) === '') {
+                Mage::log('[Aoe_TemplateImport] Empty source for: ' . $filePath, Zend_Log::ERR);
                 if (Mage::getIsDeveloperMode()) {
                     return '[Source for "' . $config['path'] . '" is empty]';
                 } else {
                     return '';
                 }
+            } else {
+                Mage::log('[Aoe_TemplateImport] Fetched source for: ' . $filePath . ' (length: ' . strlen($source). ')', Zend_Log::INFO);
             }
 
             if (!empty($config['basepath'])) {
