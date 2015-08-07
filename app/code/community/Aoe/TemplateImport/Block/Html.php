@@ -35,11 +35,19 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
 
         $source = $this->getSource($config);
 
+        $count = null;
+
         // insert blocks
         $page = $this;
         $source = preg_replace_callback('/<!--\s*###(.+)###\s*-->(.*)<!--\s*###\/\1###\s*-->/s', function ($matches) use ($page) {
-            return $page->getChildHtml($matches[1]);
-        }, $source);
+            if (Mage::getIsDeveloperMode()) {
+                Mage::log('[Aoe_TemplateImport] Injecting block: ' . $matches[1]);
+            }
+            return '<!-- BEGIN BLOCK: '.$matches[1].' -->' . $page->getChildHtml($matches[1]) . '<!-- END BLOCK: '.$matches[1].' -->';
+        }, $source, -1, $count);
+        if (Mage::getIsDeveloperMode()) {
+            Mage::log('[Aoe_TemplateImport] Match count: ' . $count);
+        }
 
         return $source;
     }
