@@ -28,7 +28,13 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
         }
 
         $source = $this->getSource();
-        if (trim($source) === '') {
+        if ($source === false) {
+            if (Mage::getIsDeveloperMode()) {
+                return '[Error while retrieving source for "' . $config['path'] . '"';
+            } else {
+                return '';
+            }
+        } elseif (trim($source) === '') {
             if (Mage::getIsDeveloperMode()) {
                 return '[Source for "' . $config['path'] . '" is empty]';
             } else {
@@ -71,14 +77,17 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
         $filePath = $config['path'];
         $context = null;
 
+        $contextData = array('http'=> array('timeout' => 10)); // TODO: make this configurable
+
         // check if this is a url
         if (preg_match('%^https?://%i', $filePath)) {
             $username = $this->helper('aoe_templateimport')->getHttpUsername();
             $password = $this->helper('aoe_templateimport')->getHttpPassword();
             if (!empty($username) && !empty($password)) {
-                $context = stream_context_create(array('http' => array('header' => "Authorization: Basic " . base64_encode("$username:$password"))));
+                $contextData['http']['header'] = "Authorization: Basic " . base64_encode("$username:$password");
             }
         }
+        $context = stream_context_create($contextData);
 
         return @file_get_contents($filePath, false, $context);
     }
