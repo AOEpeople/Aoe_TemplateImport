@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Controller_Adminhtml_TemplateImport extends Mage_Adminhtml_Controller_Action
 {
@@ -17,7 +17,7 @@ class Aoe_TemplateImport_Controller_Adminhtml_TemplateImport extends Mage_Adminh
      * @param string $destinationFolder
      * @param array $data
      * @return string
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _uploadAndGetName($input, $destinationFolder, $data)
     {

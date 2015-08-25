@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 $this->startSetup();
 $table = $this->getConnection()
@@ -86,20 +86,6 @@ $table = $this->getConnection()
         null,
         array(),
         'Origin Creation Time'
-    ) 
-    ->setComment('Origin Table');
-$this->getConnection()->createTable($table);
-$table = $this->getConnection()
-    ->newTable($this->getTable('aoe_templateimport/origin_store'))
-    ->addColumn(
-        'origin_id',
-        Varien_Db_Ddl_Table::TYPE_SMALLINT,
-        null,
-        array(
-            'nullable'  => false,
-            'primary'   => true,
-        ),
-        'Origin ID'
     )
     ->addColumn(
         'store_id',
@@ -112,39 +98,6 @@ $table = $this->getConnection()
         ),
         'Store ID'
     )
-    ->addIndex(
-        $this->getIdxName(
-            'aoe_templateimport/origin_store',
-            array('store_id')
-        ),
-        array('store_id')
-    )
-    ->addForeignKey(
-        $this->getFkName(
-            'aoe_templateimport/origin_store',
-            'origin_id',
-            'aoe_templateimport/origin',
-            'entity_id'
-        ),
-        'origin_id',
-        $this->getTable('aoe_templateimport/origin'),
-        'entity_id',
-        Varien_Db_Ddl_Table::ACTION_CASCADE,
-        Varien_Db_Ddl_Table::ACTION_CASCADE
-    )
-    ->addForeignKey(
-        $this->getFkName(
-            'aoe_templateimport/origin_store',
-            'store_id',
-            'core/store',
-            'store_id'
-        ),
-        'store_id',
-        $this->getTable('core/store'),
-        'store_id',
-        Varien_Db_Ddl_Table::ACTION_CASCADE,
-        Varien_Db_Ddl_Table::ACTION_CASCADE
-    )
-    ->setComment('Origins To Store Linkage Table');
+    ->setComment('Origin Table');
 $this->getConnection()->createTable($table);
 $this->endSetup();

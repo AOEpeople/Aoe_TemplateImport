@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
 {
@@ -15,7 +15,7 @@ class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
      * @access public
      * @param $options
      * @return array
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function convertOptions($options)
     {

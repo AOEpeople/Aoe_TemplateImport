@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
 {
@@ -13,7 +13,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs extends Mage_Adminhtml
      * Initialize Tabs
      *
      * @access public
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function __construct()
     {
@@ -28,7 +28,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs extends Mage_Adminhtml
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _beforeToHtml()
     {
@@ -51,7 +51,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs extends Mage_Adminhtml
      *
      * @access public
      * @return Aoe_TemplateImport_Model_Origin
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function getOrigin()
     {

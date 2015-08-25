@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
@@ -14,7 +14,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Form extends Mage_Adminhtml
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Form
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _prepareForm()
     {

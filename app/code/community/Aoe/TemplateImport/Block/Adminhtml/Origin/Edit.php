@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
@@ -14,7 +14,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit extends Mage_Adminhtml_Bloc
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit extends Mage_Adminhtml_Bloc
      *
      * @access public
      * @return string
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function getHeaderText()
     {

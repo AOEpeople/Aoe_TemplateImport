@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
 {
@@ -35,7 +35,7 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function _construct()
     {
@@ -48,7 +48,7 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
      *
      * @access protected
      * @return Aoe_TemplateImport_Model_Origin
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _beforeSave()
     {
@@ -66,7 +66,7 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
      *
      * @access public
      * @return Aoe_TemplateImport_Model_Origin
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _afterSave()
     {
@@ -78,7 +78,7 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
      *
      * @access public
      * @return array
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function getDefaultValues()
     {

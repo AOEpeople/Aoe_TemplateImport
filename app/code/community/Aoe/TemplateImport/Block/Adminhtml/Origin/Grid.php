@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
@@ -13,7 +13,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      * constructor
      *
      * @access public
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function __construct()
     {
@@ -30,7 +30,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _prepareCollection()
     {
@@ -46,7 +46,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _prepareColumns()
     {
@@ -85,7 +85,6 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
                 'header' => Mage::helper('aoe_templateimport')->__('Source URL'),
                 'index'  => 'source_url',
                 'type'=> 'text',
-
             )
         );
         $this->addColumn(
@@ -94,23 +93,19 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
                 'header' => Mage::helper('aoe_templateimport')->__('Priority'),
                 'index'  => 'priority',
                 'type'=> 'number',
-
             )
         );
-        if (!Mage::app()->isSingleStoreMode() && !$this->_isExport) {
-            $this->addColumn(
-                'store_id',
-                array(
-                    'header'     => Mage::helper('aoe_templateimport')->__('Store Views'),
-                    'index'      => 'store_id',
-                    'type'       => 'store',
-                    'store_all'  => true,
-                    'store_view' => true,
-                    'sortable'   => false,
-                    'filter_condition_callback'=> array($this, '_filterStoreCondition'),
-                )
-            );
-        }
+        $this->addColumn(
+            'store_id',
+            array(
+                'header'     => Mage::helper('aoe_templateimport')->__('Store Views'),
+                'index'      => 'store_id',
+                'type'       => 'store',
+                'store_all'  => true,
+                'store_view' => true,
+                'sortable'   => false,
+            )
+        );
         $this->addColumn(
             'action',
             array(
@@ -130,9 +125,9 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
                 'sortable'  => false,
             )
         );
-        $this->addExportType('*/*/exportCsv', Mage::helper('aoe_templateimport')->__('CSV'));
-        $this->addExportType('*/*/exportExcel', Mage::helper('aoe_templateimport')->__('Excel'));
-        $this->addExportType('*/*/exportXml', Mage::helper('aoe_templateimport')->__('XML'));
+//        $this->addExportType('*/*/exportCsv', Mage::helper('aoe_templateimport')->__('CSV'));
+//        $this->addExportType('*/*/exportExcel', Mage::helper('aoe_templateimport')->__('Excel'));
+//        $this->addExportType('*/*/exportXml', Mage::helper('aoe_templateimport')->__('XML'));
         return parent::_prepareColumns();
     }
 
@@ -141,7 +136,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _prepareMassaction()
     {
@@ -183,7 +178,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      * @access public
      * @param Aoe_TemplateImport_Model_Origin
      * @return string
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function getRowUrl($row)
     {
@@ -195,7 +190,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      *
      * @access public
      * @return string
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function getGridUrl()
     {
@@ -207,7 +202,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _afterLoadCollection()
     {
@@ -215,21 +210,4 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
         parent::_afterLoadCollection();
     }
 
-    /**
-     * filter store column
-     *
-     * @access protected
-     * @param Aoe_TemplateImport_Model_Resource_Origin_Collection $collection
-     * @param Mage_Adminhtml_Block_Widget_Grid_Column $column
-     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
-     * @author Ultimate Module Creator
-     */
-    protected function _filterStoreCondition($collection, $column)
-    {
-        if (!$value = $column->getFilter()->getValue()) {
-            return;
-        }
-        $collection->addStoreFilter($value);
-        return $this;
-    }
 }

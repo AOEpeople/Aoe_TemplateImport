@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
@@ -14,7 +14,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
      *
      * @access protected
      * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _prepareForm()
     {
@@ -31,7 +31,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
             'store_id',
             'select',
             array(
-                'name'     => 'stores',
+                'name'     => 'store_id',
                 'label'    => Mage::helper('aoe_templateimport')->__('Store View'),
                 'title'    => Mage::helper('aoe_templateimport')->__('Store View'),
                 'required' => true,

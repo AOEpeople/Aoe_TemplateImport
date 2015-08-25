@@ -5,7 +5,7 @@
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
- * @author      Ultimate Module Creator
+ * @author      Fabrizio Branca
  */
 class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_TemplateImport_Controller_Adminhtml_TemplateImport
 {
@@ -31,7 +31,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function indexAction()
     {
@@ -46,7 +46,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function gridAction()
     {
@@ -58,7 +58,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function editAction()
     {
@@ -95,7 +95,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function newAction()
     {
@@ -107,7 +107,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function saveAction()
     {
@@ -152,7 +152,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function deleteAction()
     {
@@ -188,7 +188,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function massDeleteAction()
     {
@@ -223,7 +223,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function massStatusAction()
     {
@@ -260,7 +260,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function exportCsvAction()
     {
@@ -275,7 +275,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function exportExcelAction()
     {
@@ -290,7 +290,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access public
      * @return void
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     public function exportXmlAction()
     {
@@ -305,7 +305,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
      *
      * @access protected
      * @return boolean
-     * @author Ultimate Module Creator
+     * @author Fabrizio Branca
      */
     protected function _isAllowed()
     {
