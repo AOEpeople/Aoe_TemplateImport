@@ -1,27 +1,13 @@
 <?php
+
 /**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
-/**
- * Template admin edit form
+ * Origin admin edit form
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     /**
      * constructor
@@ -34,16 +20,16 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Bl
     {
         parent::__construct();
         $this->_blockGroup = 'aoe_templateimport';
-        $this->_controller = 'adminhtml_template';
+        $this->_controller = 'adminhtml_origin';
         $this->_updateButton(
             'save',
             'label',
-            Mage::helper('aoe_templateimport')->__('Save Template')
+            Mage::helper('aoe_templateimport')->__('Save Origin')
         );
         $this->_updateButton(
             'delete',
             'label',
-            Mage::helper('aoe_templateimport')->__('Delete Template')
+            Mage::helper('aoe_templateimport')->__('Delete Origin')
         );
         $this->_addButton(
             'saveandcontinue',
@@ -70,13 +56,13 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Bl
      */
     public function getHeaderText()
     {
-        if (Mage::registry('current_template') && Mage::registry('current_template')->getId()) {
+        if (Mage::registry('current_origin') && Mage::registry('current_origin')->getId()) {
             return Mage::helper('aoe_templateimport')->__(
-                "Edit Template '%s'",
-                $this->escapeHtml(Mage::registry('current_template')->getFullActionName())
+                "Edit Origin '%s'",
+                $this->escapeHtml(Mage::registry('current_origin')->getFullActionName())
             );
         } else {
-            return Mage::helper('aoe_templateimport')->__('Add Template');
+            return Mage::helper('aoe_templateimport')->__('Add Origin');
         }
     }
 }

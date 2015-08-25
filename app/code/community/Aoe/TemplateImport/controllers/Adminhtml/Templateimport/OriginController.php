@@ -1,43 +1,29 @@
 <?php
+
 /**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
-/**
- * Template admin controller
+ * Origin admin controller
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe_TemplateImport_Controller_Adminhtml_TemplateImport
+class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_TemplateImport_Controller_Adminhtml_TemplateImport
 {
     /**
-     * init the template
+     * init the origin
      *
      * @access protected
-     * @return Aoe_TemplateImport_Model_Template
+     * @return Aoe_TemplateImport_Model_Origin
      */
-    protected function _initTemplate()
+    protected function _initOrigin()
     {
-        $templateId  = (int) $this->getRequest()->getParam('id');
-        $template    = Mage::getModel('aoe_templateimport/template');
-        if ($templateId) {
-            $template->load($templateId);
+        $originId  = (int) $this->getRequest()->getParam('id');
+        $origin    = Mage::getModel('aoe_templateimport/origin');
+        if ($originId) {
+            $origin->load($originId);
         }
-        Mage::register('current_template', $template);
-        return $template;
+        Mage::register('current_origin', $origin);
+        return $origin;
     }
 
     /**
@@ -51,7 +37,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
     {
         $this->loadLayout();
         $this->_title(Mage::helper('aoe_templateimport')->__('AOE Template Import'))
-             ->_title(Mage::helper('aoe_templateimport')->__('Templates'));
+             ->_title(Mage::helper('aoe_templateimport')->__('Origins'));
         $this->renderLayout();
     }
 
@@ -68,7 +54,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
     }
 
     /**
-     * edit template - action
+     * edit origin - action
      *
      * @access public
      * @return void
@@ -76,27 +62,27 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function editAction()
     {
-        $templateId    = $this->getRequest()->getParam('id');
-        $template      = $this->_initTemplate();
-        if ($templateId && !$template->getId()) {
+        $originId    = $this->getRequest()->getParam('id');
+        $origin      = $this->_initOrigin();
+        if ($originId && !$origin->getId()) {
             $this->_getSession()->addError(
-                Mage::helper('aoe_templateimport')->__('This template no longer exists.')
+                Mage::helper('aoe_templateimport')->__('This origin no longer exists.')
             );
             $this->_redirect('*/*/');
             return;
         }
-        $data = Mage::getSingleton('adminhtml/session')->getTemplateData(true);
+        $data = Mage::getSingleton('adminhtml/session')->getOriginData(true);
         if (!empty($data)) {
-            $template->setData($data);
+            $origin->setData($data);
         }
-        Mage::register('template_data', $template);
+        Mage::register('origin_data', $origin);
         $this->loadLayout();
         $this->_title(Mage::helper('aoe_templateimport')->__('AOE Template Import'))
-             ->_title(Mage::helper('aoe_templateimport')->__('Templates'));
-        if ($template->getId()) {
-            $this->_title($template->getFullActionName());
+             ->_title(Mage::helper('aoe_templateimport')->__('Origins'));
+        if ($origin->getId()) {
+            $this->_title($origin->getFullActionName());
         } else {
-            $this->_title(Mage::helper('aoe_templateimport')->__('Add template'));
+            $this->_title(Mage::helper('aoe_templateimport')->__('Add origin'));
         }
         if (Mage::getSingleton('cms/wysiwyg_config')->isEnabled()) {
             $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
@@ -105,7 +91,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
     }
 
     /**
-     * new template action
+     * new origin action
      *
      * @access public
      * @return void
@@ -117,7 +103,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
     }
 
     /**
-     * save template - action
+     * save origin - action
      *
      * @access public
      * @return void
@@ -125,44 +111,44 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function saveAction()
     {
-        if ($data = $this->getRequest()->getPost('template')) {
+        if ($data = $this->getRequest()->getPost('origin')) {
             try {
-                $template = $this->_initTemplate();
-                $template->addData($data);
-                $template->save();
+                $origin = $this->_initOrigin();
+                $origin->addData($data);
+                $origin->save();
                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('aoe_templateimport')->__('Template was successfully saved')
+                    Mage::helper('aoe_templateimport')->__('Origin was successfully saved')
                 );
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array('id' => $template->getId()));
+                    $this->_redirect('*/*/edit', array('id' => $origin->getId()));
                     return;
                 }
                 $this->_redirect('*/*/');
                 return;
             } catch (Mage_Core_Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                Mage::getSingleton('adminhtml/session')->setTemplateData($data);
+                Mage::getSingleton('adminhtml/session')->setOriginData($data);
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             } catch (Exception $e) {
                 Mage::logException($e);
                 Mage::getSingleton('adminhtml/session')->addError(
-                    Mage::helper('aoe_templateimport')->__('There was a problem saving the template.')
+                    Mage::helper('aoe_templateimport')->__('There was a problem saving the origin.')
                 );
-                Mage::getSingleton('adminhtml/session')->setTemplateData($data);
+                Mage::getSingleton('adminhtml/session')->setOriginData($data);
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
         }
         Mage::getSingleton('adminhtml/session')->addError(
-            Mage::helper('aoe_templateimport')->__('Unable to find template to save.')
+            Mage::helper('aoe_templateimport')->__('Unable to find origin to save.')
         );
         $this->_redirect('*/*/');
     }
 
     /**
-     * delete template - action
+     * delete origin - action
      *
      * @access public
      * @return void
@@ -172,10 +158,10 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
     {
         if ( $this->getRequest()->getParam('id') > 0) {
             try {
-                $template = Mage::getModel('aoe_templateimport/template');
-                $template->setId($this->getRequest()->getParam('id'))->delete();
+                $origin = Mage::getModel('aoe_templateimport/origin');
+                $origin->setId($this->getRequest()->getParam('id'))->delete();
                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('aoe_templateimport')->__('Template was successfully deleted.')
+                    Mage::helper('aoe_templateimport')->__('Origin was successfully deleted.')
                 );
                 $this->_redirect('*/*/');
                 return;
@@ -184,7 +170,7 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError(
-                    Mage::helper('aoe_templateimport')->__('There was an error deleting template.')
+                    Mage::helper('aoe_templateimport')->__('There was an error deleting origin.')
                 );
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 Mage::logException($e);
@@ -192,13 +178,13 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
             }
         }
         Mage::getSingleton('adminhtml/session')->addError(
-            Mage::helper('aoe_templateimport')->__('Could not find template to delete.')
+            Mage::helper('aoe_templateimport')->__('Could not find origin to delete.')
         );
         $this->_redirect('*/*/');
     }
 
     /**
-     * mass delete template - action
+     * mass delete origin - action
      *
      * @access public
      * @return void
@@ -206,25 +192,25 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function massDeleteAction()
     {
-        $templateIds = $this->getRequest()->getParam('template');
-        if (!is_array($templateIds)) {
+        $originIds = $this->getRequest()->getParam('origin');
+        if (!is_array($originIds)) {
             Mage::getSingleton('adminhtml/session')->addError(
-                Mage::helper('aoe_templateimport')->__('Please select templates to delete.')
+                Mage::helper('aoe_templateimport')->__('Please select origins to delete.')
             );
         } else {
             try {
-                foreach ($templateIds as $templateId) {
-                    $template = Mage::getModel('aoe_templateimport/template');
-                    $template->setId($templateId)->delete();
+                foreach ($originIds as $originId) {
+                    $origin = Mage::getModel('aoe_templateimport/origin');
+                    $origin->setId($originId)->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('aoe_templateimport')->__('Total of %d templates were successfully deleted.', count($templateIds))
+                    Mage::helper('aoe_templateimport')->__('Total of %d origins were successfully deleted.', count($originIds))
                 );
             } catch (Mage_Core_Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError(
-                    Mage::helper('aoe_templateimport')->__('There was an error deleting templates.')
+                    Mage::helper('aoe_templateimport')->__('There was an error deleting origins.')
                 );
                 Mage::logException($e);
             }
@@ -241,27 +227,27 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function massStatusAction()
     {
-        $templateIds = $this->getRequest()->getParam('template');
-        if (!is_array($templateIds)) {
+        $originIds = $this->getRequest()->getParam('origin');
+        if (!is_array($originIds)) {
             Mage::getSingleton('adminhtml/session')->addError(
-                Mage::helper('aoe_templateimport')->__('Please select templates.')
+                Mage::helper('aoe_templateimport')->__('Please select origins.')
             );
         } else {
             try {
-                foreach ($templateIds as $templateId) {
-                $template = Mage::getSingleton('aoe_templateimport/template')->load($templateId)
+                foreach ($originIds as $originId) {
+                $origin = Mage::getSingleton('aoe_templateimport/origin')->load($originId)
                             ->setStatus($this->getRequest()->getParam('status'))
                             ->setIsMassupdate(true)
                             ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    $this->__('Total of %d templates were successfully updated.', count($templateIds))
+                    $this->__('Total of %d origins were successfully updated.', count($originIds))
                 );
             } catch (Mage_Core_Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError(
-                    Mage::helper('aoe_templateimport')->__('There was an error updating templates.')
+                    Mage::helper('aoe_templateimport')->__('There was an error updating origins.')
                 );
                 Mage::logException($e);
             }
@@ -278,8 +264,8 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function exportCsvAction()
     {
-        $fileName   = 'template.csv';
-        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_template_grid')
+        $fileName   = 'origin.csv';
+        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_origin_grid')
             ->getCsv();
         $this->_prepareDownloadResponse($fileName, $content);
     }
@@ -293,8 +279,8 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function exportExcelAction()
     {
-        $fileName   = 'template.xls';
-        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_template_grid')
+        $fileName   = 'origin.xls';
+        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_origin_grid')
             ->getExcelFile();
         $this->_prepareDownloadResponse($fileName, $content);
     }
@@ -308,8 +294,8 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     public function exportXmlAction()
     {
-        $fileName   = 'template.xml';
-        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_template_grid')
+        $fileName   = 'origin.xml';
+        $content    = $this->getLayout()->createBlock('aoe_templateimport/adminhtml_origin_grid')
             ->getXml();
         $this->_prepareDownloadResponse($fileName, $content);
     }
@@ -323,6 +309,6 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_TemplateController extends Aoe
      */
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('system/aoe_templateimport/template');
+        return Mage::getSingleton('admin/session')->isAllowed('system/aoe_templateimport/origin');
     }
 }

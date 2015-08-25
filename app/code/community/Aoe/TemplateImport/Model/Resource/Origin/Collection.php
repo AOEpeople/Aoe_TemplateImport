@@ -1,27 +1,13 @@
 <?php
+
 /**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
-/**
- * Template collection resource model
+ * Origin collection resource model
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Model_Resource_Template_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Aoe_TemplateImport_Model_Resource_Origin_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     protected $_joinedFields = array();
 
@@ -35,7 +21,7 @@ class Aoe_TemplateImport_Model_Resource_Template_Collection extends Mage_Core_Mo
     protected function _construct()
     {
         parent::_construct();
-        $this->_init('aoe_templateimport/template');
+        $this->_init('aoe_templateimport/origin');
         $this->_map['fields']['store'] = 'store_table.store_id';
     }
 
@@ -45,7 +31,7 @@ class Aoe_TemplateImport_Model_Resource_Template_Collection extends Mage_Core_Mo
      * @access public
      * @param int|Mage_Core_Model_Store $store
      * @param bool $withAdmin
-     * @return Aoe_TemplateImport_Model_Resource_Template_Collection
+     * @return Aoe_TemplateImport_Model_Resource_Origin_Collection
      * @author Ultimate Module Creator
      */
     public function addStoreFilter($store, $withAdmin = true)
@@ -70,15 +56,15 @@ class Aoe_TemplateImport_Model_Resource_Template_Collection extends Mage_Core_Mo
      * Join store relation table if there is store filter
      *
      * @access protected
-     * @return Aoe_TemplateImport_Model_Resource_Template_Collection
+     * @return Aoe_TemplateImport_Model_Resource_Origin_Collection
      * @author Ultimate Module Creator
      */
     protected function _renderFiltersBefore()
     {
         if ($this->getFilter('store')) {
             $this->getSelect()->join(
-                array('store_table' => $this->getTable('aoe_templateimport/template_store')),
-                'main_table.entity_id = store_table.template_id',
+                array('store_table' => $this->getTable('aoe_templateimport/origin_store')),
+                'main_table.entity_id = store_table.origin_id',
                 array()
             )
             ->group('main_table.entity_id');
@@ -91,7 +77,7 @@ class Aoe_TemplateImport_Model_Resource_Template_Collection extends Mage_Core_Mo
     }
 
     /**
-     * get templates as array
+     * get origins as array
      *
      * @access protected
      * @param string $valueField

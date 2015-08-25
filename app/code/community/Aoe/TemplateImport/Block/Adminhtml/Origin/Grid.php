@@ -1,27 +1,13 @@
 <?php
+
 /**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
-/**
- * Template admin grid block
+ * Origin admin grid block
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     /**
      * constructor
@@ -32,7 +18,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
     public function __construct()
     {
         parent::__construct();
-        $this->setId('templateGrid');
+        $this->setId('originGrid');
         $this->setDefaultSort('entity_id');
         $this->setDefaultDir('ASC');
         $this->setSaveParametersInSession(true);
@@ -43,12 +29,12 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * prepare collection
      *
      * @access protected
-     * @return Aoe_TemplateImport_Block_Adminhtml_Template_Grid
+     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
      * @author Ultimate Module Creator
      */
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('aoe_templateimport/template')
+        $collection = Mage::getModel('aoe_templateimport/origin')
             ->getCollection();
         
         $this->setCollection($collection);
@@ -59,7 +45,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * prepare grid collection
      *
      * @access protected
-     * @return Aoe_TemplateImport_Block_Adminhtml_Template_Grid
+     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
      * @author Ultimate Module Creator
      */
     protected function _prepareColumns()
@@ -154,13 +140,13 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * prepare mass action
      *
      * @access protected
-     * @return Aoe_TemplateImport_Block_Adminhtml_Template_Grid
+     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
      * @author Ultimate Module Creator
      */
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('entity_id');
-        $this->getMassactionBlock()->setFormFieldName('template');
+        $this->getMassactionBlock()->setFormFieldName('origin');
         $this->getMassactionBlock()->addItem(
             'delete',
             array(
@@ -195,7 +181,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * get the row url
      *
      * @access public
-     * @param Aoe_TemplateImport_Model_Template
+     * @param Aoe_TemplateImport_Model_Origin
      * @return string
      * @author Ultimate Module Creator
      */
@@ -220,7 +206,7 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * after collection load
      *
      * @access protected
-     * @return Aoe_TemplateImport_Block_Adminhtml_Template_Grid
+     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
      * @author Ultimate Module Creator
      */
     protected function _afterLoadCollection()
@@ -233,9 +219,9 @@ class Aoe_TemplateImport_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Bl
      * filter store column
      *
      * @access protected
-     * @param Aoe_TemplateImport_Model_Resource_Template_Collection $collection
+     * @param Aoe_TemplateImport_Model_Resource_Origin_Collection $collection
      * @param Mage_Adminhtml_Block_Widget_Grid_Column $column
-     * @return Aoe_TemplateImport_Block_Adminhtml_Template_Grid
+     * @return Aoe_TemplateImport_Block_Adminhtml_Origin_Grid
      * @author Ultimate Module Creator
      */
     protected function _filterStoreCondition($collection, $column)

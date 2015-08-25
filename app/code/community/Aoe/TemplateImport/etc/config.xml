@@ -1,21 +1,5 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
--->
+
 <config>
     <modules>
         <Aoe_TemplateImport>
@@ -49,12 +33,12 @@
             <aoe_templateimport_resource>
                 <class>Aoe_TemplateImport_Model_Resource</class>
                 <entities>
-                    <template>
-                        <table>aoe_templateimport_template</table>
-                    </template>
-                    <template_store>
-                        <table>aoe_templateimport_template_store</table>
-                    </template_store>
+                    <origin>
+                        <table>aoe_templateimport_origin</table>
+                    </origin>
+                    <origin_store>
+                        <table>aoe_templateimport_origin_store</table>
+                    </origin_store>
                 </entities>
             </aoe_templateimport_resource>
         </models>

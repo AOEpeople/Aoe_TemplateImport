@@ -1,48 +1,34 @@
 <?php
+
 /**
- * Aoe_TemplateImport extension
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
- * 
- * @category       Aoe
- * @package        Aoe_TemplateImport
- * @copyright      Copyright (c) 2015
- * @license        http://opensource.org/licenses/mit-license.php MIT License
- */
-/**
- * Template model
+ * Origin model
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Model_Template extends Mage_Core_Model_Abstract
+class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
 {
     /**
      * Entity code.
      * Can be used as part of method name for entity processing
      */
-    const ENTITY    = 'aoe_templateimport_template';
-    const CACHE_TAG = 'aoe_templateimport_template';
+    const ENTITY    = 'aoe_templateimport_origin';
+    const CACHE_TAG = 'aoe_templateimport_origin';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix = 'aoe_templateimport_template';
+    protected $_eventPrefix = 'aoe_templateimport_origin';
 
     /**
      * Parameter name in event
      *
      * @var string
      */
-    protected $_eventObject = 'template';
+    protected $_eventObject = 'origin';
 
     /**
      * constructor
@@ -54,14 +40,14 @@ class Aoe_TemplateImport_Model_Template extends Mage_Core_Model_Abstract
     public function _construct()
     {
         parent::_construct();
-        $this->_init('aoe_templateimport/template');
+        $this->_init('aoe_templateimport/origin');
     }
 
     /**
-     * before save template
+     * before save origin
      *
      * @access protected
-     * @return Aoe_TemplateImport_Model_Template
+     * @return Aoe_TemplateImport_Model_Origin
      * @author Ultimate Module Creator
      */
     protected function _beforeSave()
@@ -76,10 +62,10 @@ class Aoe_TemplateImport_Model_Template extends Mage_Core_Model_Abstract
     }
 
     /**
-     * save template relation
+     * save origin relation
      *
      * @access public
-     * @return Aoe_TemplateImport_Model_Template
+     * @return Aoe_TemplateImport_Model_Origin
      * @author Ultimate Module Creator
      */
     protected function _afterSave()
