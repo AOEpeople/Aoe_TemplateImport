@@ -15,31 +15,28 @@
  * @license        http://opensource.org/licenses/mit-license.php MIT License
  */
 /**
- * TemplateImport default helper
+ * Template admin block
  *
  * @category    Aoe
  * @package     Aoe_TemplateImport
  * @author      Ultimate Module Creator
  */
-class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
+class Aoe_TemplateImport_Block_Adminhtml_Template extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
     /**
-     * convert array to options
+     * constructor
      *
      * @access public
-     * @param $options
-     * @return array
+     * @return void
      * @author Ultimate Module Creator
      */
-    public function convertOptions($options)
+    public function __construct()
     {
-        $converted = array();
-        foreach ($options as $option) {
-            if (isset($option['value']) && !is_array($option['value']) &&
-                isset($option['label']) && !is_array($option['label'])) {
-                $converted[$option['value']] = $option['label'];
-            }
-        }
-        return $converted;
+        $this->_controller         = 'adminhtml_template';
+        $this->_blockGroup         = 'aoe_templateimport';
+        parent::__construct();
+        $this->_headerText         = Mage::helper('aoe_templateimport')->__('Template');
+        $this->_updateButton('add', 'label', Mage::helper('aoe_templateimport')->__('Add Template'));
+
     }
 }

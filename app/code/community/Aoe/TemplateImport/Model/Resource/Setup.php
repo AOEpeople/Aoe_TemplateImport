@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * Aoe_TemplateImport extension
  * 
@@ -15,15 +14,13 @@
  * @copyright      Copyright (c) 2015
  * @license        http://opensource.org/licenses/mit-license.php MIT License
  */
--->
-<config>
-    <modules>
-        <Aoe_TemplateImport>
-            <active>true</active>
-            <codePool>community</codePool>
-            <depends>
-                <Mage_Core />
-             </depends>
-        </Aoe_TemplateImport>
-    </modules>
-</config>
+/**
+ * TemplateImport setup
+ *
+ * @category    Aoe
+ * @package     Aoe_TemplateImport
+ * @author      Ultimate Module Creator
+ */
+class Aoe_TemplateImport_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
+{
+}

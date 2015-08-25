@@ -1,28 +1,40 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Template import
- *
- * @author Manish Jain
- * @author Fabrizio Branca
+ * Aoe_TemplateImport extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Aoe
+ * @package        Aoe_TemplateImport
+ * @copyright      Copyright (c) 2015
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
  */
 -->
 <config>
     <modules>
         <Aoe_TemplateImport>
-            <version>0.4.0</version>
+            <version>1.0.0</version>
         </Aoe_TemplateImport>
     </modules>
     <global>
+        <resources>
+            <aoe_templateimport_setup>
+                <setup>
+                    <module>Aoe_TemplateImport</module>
+                    <class>Aoe_TemplateImport_Model_Resource_Setup</class>
+                </setup>
+            </aoe_templateimport_setup>
+        </resources>
         <blocks>
             <aoe_templateimport>
                 <class>Aoe_TemplateImport_Block</class>
             </aoe_templateimport>
-            <page>
-                <rewrite>
-                    <html>Aoe_TemplateImport_Block_Html</html>
-                </rewrite>
-            </page>
         </blocks>
         <helpers>
             <aoe_templateimport>
@@ -37,18 +49,43 @@
             <aoe_templateimport_resource>
                 <class>Aoe_TemplateImport_Model_Resource</class>
                 <entities>
-                    <config>
-                        <table>aoe_templateimport_config</table>
-                    </config>
+                    <template>
+                        <table>aoe_templateimport_template</table>
+                    </template>
+                    <template_store>
+                        <table>aoe_templateimport_template_store</table>
+                    </template_store>
                 </entities>
             </aoe_templateimport_resource>
         </models>
-        <resources>
-            <aoe_templateimport_setup>
-                <setup>
-                    <module>Aoe_TemplateImport</module>
-                </setup>
-            </aoe_templateimport_setup>
-        </resources>
     </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <aoe_templateimport>
+                    <file>aoe_templateimport.xml</file>
+                </aoe_templateimport>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Aoe_TemplateImport>
+                    <files>
+                        <default>Aoe_TemplateImport.csv</default>
+                    </files>
+                </Aoe_TemplateImport>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Aoe_TemplateImport before="Mage_Adminhtml">Aoe_TemplateImport_Adminhtml</Aoe_TemplateImport>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

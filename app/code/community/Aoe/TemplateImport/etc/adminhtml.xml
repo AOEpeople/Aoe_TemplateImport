@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Aoe_TemplateImport extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Aoe
+ * @package        Aoe_TemplateImport
+ * @copyright      Copyright (c) 2015
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <aoe_templateimport translate="title" module="aoe_templateimport">
+                                        <title>TemplateImport</title>
+                                    </aoe_templateimport>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <system>
+                        <children>
+                            <aoe_templateimport translate="title" module="aoe_templateimport">
+                                <title>AOE Template Import</title>
+                                <children>
+                                    <template translate="title" module="aoe_templateimport">
+                                        <title>Template</title>
+                                        <sort_order>0</sort_order>
+                                    </template>
+                                </children>
+                            </aoe_templateimport>                        </children>
+                    </system>
+
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <system>
+            <children>
+                <aoe_templateimport translate="title" module="aoe_templateimport">
+                    <title>AOE Template Import</title>
+                    <sort_order>0</sort_order>
+                    <children>
+                        <template translate="title" module="aoe_templateimport">
+                            <title>Template</title>
+                            <action>adminhtml/templateimport_template</action>
+                            <sort_order>0</sort_order>
+                        </template>
+                    </children>
+                </aoe_templateimport>            </children>
+        </system>
+
+    </menu>
+</config>

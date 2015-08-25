@@ -1,2 +1,5 @@
-app/etc/modules/Aoe_TemplateImport.xml                      app/etc/modules/Aoe_TemplateImport.xml
-app/code/community/Aoe/TemplateImport/                      app/code/community/Aoe/TemplateImport/
+app/code/community/Aoe/TemplateImport    app/code/community/Aoe/TemplateImport
+app/design/adminhtml/default/default/layout/aoe_templateimport.xml    app/design/adminhtml/default/default/layout/aoe_templateimport.xml
+app/design/adminhtml/default/default/template/aoe_templateimport    app/design/adminhtml/default/default/template/aoe_templateimport
+app/etc/modules/Aoe_TemplateImport.xml    app/etc/modules/Aoe_TemplateImport.xml
+app/locale/en_US/Aoe_TemplateImport.csv    app/locale/en_US/Aoe_TemplateImport.csv
