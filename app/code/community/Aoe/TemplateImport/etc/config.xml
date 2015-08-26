@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Aoe_TemplateImport>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </Aoe_TemplateImport>
     </modules>
     <global>
@@ -85,4 +85,11 @@
             </aoe_templateimport_refresh>
         </jobs>
     </crontab>
+    <default>
+        <design>
+            <aoe_templateimport>
+                <timeout>30</timeout>
+            </aoe_templateimport>
+        </design>
+    </default>
 </config>

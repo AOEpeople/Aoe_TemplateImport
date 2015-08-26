@@ -20,8 +20,8 @@ class Aoe_TemplateImport_Helper_Source extends Mage_Core_Helper_Abstract
      */
     public function fetchSource($sourceUrl, $username=null, $password=null)
     {
-        // TODO: make timeout configurable
-        $contextData = array('http'=> array('timeout' => 10));
+        $timeout = min(1, intval(Mage::getStoreConfig('design/aoe_templateimport/timeout')));
+        $contextData = array('http'=> array('timeout' => $timeout));
         if (preg_match('%^https?://%i', $sourceUrl) && !empty($username) && !empty($password)) {
             $contextData['http']['header'] = "Authorization: Basic " . base64_encode("$username:$password");
         }
@@ -36,10 +36,11 @@ class Aoe_TemplateImport_Helper_Source extends Mage_Core_Helper_Abstract
      * @param $basepath
      * @return mixed
      */
-    public function convertRelativePaths($source, $basepath) {
+    public function convertRelativePaths($source, $basepath)
+    {
         if (!empty($basepath)) {
             $basepath = rtrim($basepath, '/');
-            $source = preg_replace_callback('/<(script|img|link)(.*)(src|href)=("|\')(.+)("|\')/', function ($matches) use ($basepath) {
+            $source = preg_replace_callback('/<(a|script|img|link)(.*)(src|href)=("|\')(.+)("|\')/', function ($matches) use ($basepath) {
                 $url = $matches[5];
                 if (!preg_match('%^(https?:)?//%', $url)) {
                     $url = ltrim($url, '/');
@@ -58,7 +59,8 @@ class Aoe_TemplateImport_Helper_Source extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Block_Abstract $block
      * @return mixed
      */
-    public function injectChildBlocks($source, Mage_Core_Block_Abstract $block) {
+    public function injectChildBlocks($source, Mage_Core_Block_Abstract $block)
+    {
         $count = null;
 
         $source = preg_replace_callback('/<!--\s*###(.+)###\s*-->(.*)<!--\s*###\/\1###\s*-->/s', function ($matches) use ($block) {
