@@ -37,6 +37,18 @@ class Aoe_TemplateImport_Block_Html extends Mage_Page_Block_Html
         }
 
         $source = $origin->getSource();
+        if (empty($source)) {
+            $origin->refresh();
+            $source = $origin->getSource();
+            if (empty($source)) {
+                Mage::log('[Aoe_TemplateImport] Error retrieving source for: ' . $fullActionName . ' in store ' . $storeId, Zend_Log::ERR);
+                if (Mage::getIsDeveloperMode()) {
+                    return '[no content found for "' . $fullActionName . ' in store ' . $storeId . '"]';
+                } else {
+                    return '';
+                }
+            }
+        }
 
         $sourceHelper = Mage::helper('aoe_templateimport/source'); /* @var $sourceHelper Aoe_TemplateImport_Helper_Source */
         $source = $sourceHelper->injectChildBlocks($source, $this);
