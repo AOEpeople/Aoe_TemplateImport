@@ -107,6 +107,14 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
             )
         );
         $this->addColumn(
+            'updated_at',
+            array(
+                'header' => Mage::helper('aoe_templateimport')->__('Updated'),
+                'index'  => 'updated_at',
+                'type'=> 'datetime',
+            )
+        );
+        $this->addColumn(
             'action',
             array(
                 'header'  =>  Mage::helper('aoe_templateimport')->__('Action'),
@@ -151,6 +159,20 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
             )
         );
         $this->getMassactionBlock()->addItem(
+            'refresh',
+            array(
+                'label'=> Mage::helper('aoe_templateimport')->__('Refresh'),
+                'url'  => $this->getUrl('*/*/massRefresh')
+            )
+        );
+        $this->getMassactionBlock()->addItem(
+            'clone',
+            array(
+                'label'=> Mage::helper('aoe_templateimport')->__('Clone'),
+                'url'  => $this->getUrl('*/*/massClone')
+            )
+        );
+        $this->getMassactionBlock()->addItem(
             'status',
             array(
                 'label'      => Mage::helper('aoe_templateimport')->__('Change status'),
@@ -165,6 +187,22 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
                             '1' => Mage::helper('aoe_templateimport')->__('Enabled'),
                             '0' => Mage::helper('aoe_templateimport')->__('Disabled'),
                         )
+                    ),
+                )
+            )
+        );
+        $this->getMassactionBlock()->addItem(
+            'store',
+            array(
+                'label'      => Mage::helper('aoe_templateimport')->__('Change store'),
+                'url'        => $this->getUrl('*/*/massStore', array('_current'=>true)),
+                'additional' => array(
+                    'store_id' => array(
+                        'name'   => 'store_id',
+                        'type'   => 'select',
+                        'class'  => 'required-entry',
+                        'label'  => Mage::helper('aoe_templateimport')->__('Store'),
+                        'values' => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, false)
                     )
                 )
             )

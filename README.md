@@ -1,8 +1,8 @@
 # Aoe_TemplateImport
 
 ### Authors:
-- Manish Jain
 - [Fabrizio Branca](https://twitter.com/fbrnc)
+- Manish Jain
 
 Aoe_TemplateImport module allow to use custom html file and render the placeholders.
 
@@ -35,30 +35,15 @@ In this case, instead of modifying the header/footer in magento to match the fro
 </html>
 ```
 
-### Configuration
-```
-Admin > System > Configuration > GENERAL > Design > Aoe Template Import
-```
-
-#### Format:
-```
-[regex pattern for full action name];[template path];[base path];[cache lifetime in secs]
-```
-
-#### Example:
-```
-- checkout_cart_index;/var/www/project/cart.html;;60
-- checkout_cart_.*;/var/www/project/cart.html;;60
-- .*;/var/www/project/default.html;;60
-```
-
 #### Placeholders
 Supported placeholders for template path and base path:
+- Any filter e.g. {{customvar TEMPLATEURL="http://www.example.com/"}}
 - ###BASE_URL###
 - ###MAGENTO_ROOT###
 
 ## Changelog
 
+* 1.0.0: Major rewrite to store configuration and cache in new records
 * 0.3.0: Added source cache
 * 0.2.3: Added info for empty config or content when in dev mode
 * 0.2.1: Support single quotes

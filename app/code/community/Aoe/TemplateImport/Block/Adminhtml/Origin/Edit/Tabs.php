@@ -43,6 +43,17 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tabs extends Mage_Adminhtml
                 ->toHtml(),
             )
         );
+        $this->addTab(
+            'form_content',
+            array(
+                'label'   => Mage::helper('aoe_templateimport')->__('Content'),
+                'title'   => Mage::helper('aoe_templateimport')->__('Content'),
+                'content' => $this->getLayout()->createBlock(
+                    'aoe_templateimport/adminhtml_origin_edit_tab_content'
+                )
+               ->toHtml(),
+            )
+        );
         return parent::_beforeToHtml();
     }
 

@@ -184,6 +184,78 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
     }
 
     /**
+     * mass clone origin - action
+     *
+     * @access public
+     * @return void
+     * @author Fabrizio Branca
+     */
+    public function massCloneAction()
+    {
+        $originIds = $this->getRequest()->getParam('origin');
+        if (!is_array($originIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('aoe_templateimport')->__('Please select origins to clone.')
+            );
+        } else {
+            try {
+                foreach ($originIds as $originId) {
+                    $origin = Mage::getModel('aoe_templateimport/origin'); /* @var $origin Aoe_TemplateImport_Model_Origin */
+                    $origin->load($originId);
+                    $newOrigin = $origin->createClone();
+                    $newOrigin->save();
+                    Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('aoe_templateimport')->__('Origin %d was successfully cloned (%d).', $origin->getId(), $newOrigin->getId()));
+                }
+            } catch (Mage_Core_Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('aoe_templateimport')->__('There was an error refreshing origins.')
+                );
+                Mage::logException($e);
+            }
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    /**
+     * mass refresh origin - action
+     *
+     * @access public
+     * @return void
+     * @author Fabrizio Branca
+     */
+    public function massRefreshAction()
+    {
+        $originIds = $this->getRequest()->getParam('origin');
+        if (!is_array($originIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('aoe_templateimport')->__('Please select origins to refresh.')
+            );
+        } else {
+            try {
+                foreach ($originIds as $originId) {
+                    $origin = Mage::getModel('aoe_templateimport/origin'); /* @var $origin Aoe_TemplateImport_Model_Origin */
+                    $origin->load($originId);
+                    if ($origin->refresh()) {
+                        Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('aoe_templateimport')->__('Origin %d was successfully refreshed.', $origin->getId()));
+                    } else {
+                        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('aoe_templateimport')->__('Error while refreshing origin %d.', $origin->getId()));
+                    }
+                }
+            } catch (Mage_Core_Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('aoe_templateimport')->__('There was an error refreshing origins.')
+                );
+                Mage::logException($e);
+            }
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    /**
      * mass delete origin - action
      *
      * @access public
@@ -211,6 +283,43 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError(
                     Mage::helper('aoe_templateimport')->__('There was an error deleting origins.')
+                );
+                Mage::logException($e);
+            }
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    /**
+     * mass status change - action
+     *
+     * @access public
+     * @return void
+     * @author Fabrizio Branca
+     */
+    public function massStoreAction()
+    {
+        $originIds = $this->getRequest()->getParam('origin');
+        if (!is_array($originIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('aoe_templateimport')->__('Please select origins.')
+            );
+        } else {
+            try {
+                foreach ($originIds as $originId) {
+                    $origin = Mage::getSingleton('aoe_templateimport/origin')->load($originId)
+                        ->setStoreId($this->getRequest()->getParam('store_id'))
+                        ->setIsMassupdate(true)
+                        ->save();
+                }
+                $this->_getSession()->addSuccess(
+                    $this->__('Total of %d origins were successfully updated.', count($originIds))
+                );
+            } catch (Mage_Core_Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('aoe_templateimport')->__('There was an error updating origins.')
                 );
                 Mage::logException($e);
             }

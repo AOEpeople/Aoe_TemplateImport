@@ -44,15 +44,6 @@ $table = $this->getConnection()
         'Base URL'
     )
     ->addColumn(
-        'lifetime',
-        Varien_Db_Ddl_Table::TYPE_INTEGER, null,
-        array(
-            'nullable'  => false,
-            'unsigned'  => true,
-        ),
-        'Lifetime'
-    )
-    ->addColumn(
         'priority',
         Varien_Db_Ddl_Table::TYPE_INTEGER, null,
         array(
@@ -63,7 +54,7 @@ $table = $this->getConnection()
     )
     ->addColumn(
         'source',
-        Varien_Db_Ddl_Table::TYPE_TEXT, '64k',
+        Varien_Db_Ddl_Table::TYPE_VARBINARY, Varien_Db_Ddl_Table::MAX_VARBINARY_SIZE,
         array(),
         'Source Content'
     )
@@ -81,13 +72,6 @@ $table = $this->getConnection()
         'Origin Modification Time'
     )
     ->addColumn(
-        'created_at',
-        Varien_Db_Ddl_Table::TYPE_TIMESTAMP,
-        null,
-        array(),
-        'Origin Creation Time'
-    )
-    ->addColumn(
         'store_id',
         Varien_Db_Ddl_Table::TYPE_SMALLINT,
         null,
@@ -97,6 +81,18 @@ $table = $this->getConnection()
             'primary'   => true,
         ),
         'Store ID'
+    )
+    ->addColumn(
+        'http_username',
+        Varien_Db_Ddl_Table::TYPE_TEXT, 255,
+        array(),
+        'HTTP Username'
+    )
+    ->addColumn(
+        'http_password',
+        Varien_Db_Ddl_Table::TYPE_TEXT, 255,
+        array(),
+        'HTTP Password'
     )
     ->setComment('Origin Table');
 $this->getConnection()->createTable($table);

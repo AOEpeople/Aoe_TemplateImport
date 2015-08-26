@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <design>
+            <groups>
+                <aoe_templateimport>
+                    <label>AOE Template Import</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled Template Import</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                    </fields>
+                </aoe_templateimport>
+            </groups>
+        </design>
+    </sections>
+</config>

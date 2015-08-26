@@ -3,15 +3,15 @@
     "type":"magento-module",
     "license":"OSL-3.0",
     "homepage":"https://github.com/AOEpeople/Aoe_TemplateImport",
-    "description":"Render Layout from non Magento template file",
+    "description":"Render Layout from non Magento template files",
     "authors":[
-        {
-            "name":"Manish Jain",
-            "email":"manish.sh.jain@gmail.com"
-        },
         {
             "name":"Fabrizio Branca",
             "email":"firstname.lastname@aoe.com"
+        },
+        {
+            "name":"Manish Jain",
+            "email":"manish.sh.jain@gmail.com"
         }
     ],
     "require":{
