@@ -19,6 +19,11 @@
             <aoe_templateimport>
                 <class>Aoe_TemplateImport_Block</class>
             </aoe_templateimport>
+            <page>
+                <rewrite>
+                    <html>Aoe_TemplateImport_Block_Html</html>
+                </rewrite>
+            </page>
         </blocks>
         <helpers>
             <aoe_templateimport>
@@ -72,4 +77,12 @@
             </adminhtml>
         </routers>
     </admin>
+    <crontab>
+        <jobs>
+            <aoe_templateimport_refresh>
+                <schedule><cron_expr>45 * * * *</cron_expr></schedule>
+                <run><model>aoe_templateimport/cron::refreshAll</model></run>
+            </aoe_templateimport_refresh>
+        </jobs>
+    </crontab>
 </config>

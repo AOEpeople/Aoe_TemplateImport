@@ -26,7 +26,24 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
             'origin_form',
             array('legend' => Mage::helper('aoe_templateimport')->__('Origin'))
         );
-
+        $fieldset->addField(
+            'status',
+            'select',
+            array(
+                'label'  => Mage::helper('aoe_templateimport')->__('Status'),
+                'name'   => 'status',
+                'values' => array(
+                    array(
+                        'value' => 1,
+                        'label' => Mage::helper('aoe_templateimport')->__('Enabled'),
+                    ),
+                    array(
+                        'value' => 0,
+                        'label' => Mage::helper('aoe_templateimport')->__('Disabled'),
+                    ),
+                ),
+            )
+        );
         $field = $fieldset->addField(
             'store_id',
             'select',
@@ -51,6 +68,22 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
         );
 
         $fieldset->addField(
+            'priority',
+            'text',
+            array(
+                'label' => Mage::helper('aoe_templateimport')->__('Priority'),
+                'name'  => 'priority',
+                'required'  => true,
+                'class' => 'required-entry',
+            )
+        );
+
+        $fieldset = $form->addFieldset(
+            'origin_form_source',
+            array('legend' => Mage::helper('aoe_templateimport')->__('Source'))
+        );
+
+        $fieldset->addField(
             'source_url',
             'text',
             array(
@@ -62,73 +95,33 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
         );
 
         $fieldset->addField(
+            'http_username',
+            'text',
+            array(
+                'label' => Mage::helper('aoe_templateimport')->__('HTTP Username'),
+                'name'  => 'http_username',
+            )
+        );
+
+        $fieldset->addField(
+            'http_password',
+            'text',
+            array(
+                'label' => Mage::helper('aoe_templateimport')->__('HTTP Password'),
+                'name'  => 'http_password',
+            )
+        );
+
+        $fieldset->addField(
             'base_url',
             'text',
             array(
                 'label' => Mage::helper('aoe_templateimport')->__('Base URL'),
                 'name'  => 'base_url',
+                'after_element_html' => '<small>' .Mage::helper('aoe_templateimport')->__('This URL will be prepended to all relative paths (e.g. js/css) in the HTML source.') . '</small>'
            )
         );
 
-        $fieldset->addField(
-            'lifetime',
-            'text',
-            array(
-                'label' => Mage::helper('aoe_templateimport')->__('Lifetime'),
-                'name'  => 'lifetime',
-                'required'  => true,
-                'class' => 'required-entry',
-           )
-        );
-
-        $fieldset->addField(
-            'priority',
-            'text',
-            array(
-                'label' => Mage::helper('aoe_templateimport')->__('Priority'),
-                'name'  => 'priority',
-                'required'  => true,
-                'class' => 'required-entry',
-           )
-        );
-
-        $fieldset->addField(
-            'source',
-            'textarea',
-            array(
-                'label' => Mage::helper('aoe_templateimport')->__('Source Content'),
-                'name'  => 'source',
-           )
-        );
-        $fieldset->addField(
-            'status',
-            'select',
-            array(
-                'label'  => Mage::helper('aoe_templateimport')->__('Status'),
-                'name'   => 'status',
-                'values' => array(
-                    array(
-                        'value' => 1,
-                        'label' => Mage::helper('aoe_templateimport')->__('Enabled'),
-                    ),
-                    array(
-                        'value' => 0,
-                        'label' => Mage::helper('aoe_templateimport')->__('Disabled'),
-                    ),
-                ),
-            )
-        );
-        if (Mage::app()->isSingleStoreMode()) {
-            $fieldset->addField(
-                'store_id',
-                'hidden',
-                array(
-                    'name'      => 'stores[]',
-                    'value'     => Mage::app()->getStore(true)->getId()
-                )
-            );
-            Mage::registry('current_origin')->setStoreId(Mage::app()->getStore(true)->getId());
-        }
         $formValues = Mage::registry('current_origin')->getDefaultValues();
         if (!is_array($formValues)) {
             $formValues = array();
