@@ -14,21 +14,11 @@
                                     </aoe_templateimport>
                                 </children>
                             </config>
-                        </children>
-                    </system>
-                    <system>
-                        <children>
                             <aoe_templateimport translate="title" module="aoe_templateimport">
                                 <title>AOE Template Import</title>
-                                <children>
-                                    <origin translate="title" module="aoe_templateimport">
-                                        <title>Origin</title>
-                                        <sort_order>0</sort_order>
-                                    </origin>
-                                </children>
-                            </aoe_templateimport>                        </children>
+                            </aoe_templateimport>
+                        </children>
                     </system>
-
                 </children>
             </admin>
         </resources>
@@ -38,16 +28,9 @@
             <children>
                 <aoe_templateimport translate="title" module="aoe_templateimport">
                     <title>AOE Template Import</title>
-                    <sort_order>0</sort_order>
-                    <children>
-                        <origin translate="title" module="aoe_templateimport">
-                            <title>Origin</title>
-                            <action>adminhtml/templateimport_origin</action>
-                            <sort_order>0</sort_order>
-                        </origin>
-                    </children>
-                </aoe_templateimport>            </children>
+                    <action>adminhtml/templateimport_origin</action>
+                </aoe_templateimport>
+            </children>
         </system>
-
     </menu>
 </config>
