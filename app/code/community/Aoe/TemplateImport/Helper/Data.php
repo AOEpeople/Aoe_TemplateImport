@@ -45,7 +45,7 @@ class Aoe_TemplateImport_Helper_Data extends Mage_Core_Helper_Abstract
         }
         $replace = array(
             '###BASE_URL###' => Mage::getBaseUrl(),
-            '###MAGENTO_ROOT###' => MAGENTO_ROOT
+            '###MAGENTO_ROOT###' => Mage::getBaseDir()
         );
         return str_replace(array_keys($replace), array_values($replace), $string);
     }
