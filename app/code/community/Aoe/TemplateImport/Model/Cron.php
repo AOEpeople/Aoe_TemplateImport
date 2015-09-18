@@ -10,7 +10,8 @@ class Aoe_TemplateImport_Model_Cron {
 
     public function refreshAll() {
         $collection = Mage::getModel('aoe_templateimport/origin')
-            ->getCollection();
+            ->getCollection()
+            ->addFieldToFilter('status', '1');
         $stats = array();
         $success = true;
         foreach ($collection as $origin) { /* @var $origin Aoe_TemplateImport_Model_Origin */
@@ -20,11 +21,13 @@ class Aoe_TemplateImport_Model_Cron {
                 $success = false;
             }
             $stats[$origin->getId()] = array(
+                'origin' => $origin->getSourceUrl(),
+                'store' => $origin->getStoreId(),
                 'duration' => time() - $start,
                 'status' => $res ? 'success' : 'failed'
              );
         }
-        return $success ? $stats : 'ERROR: Updating one or more origins failed';
+        return $success ? $stats : 'ERROR: Updating one or more origins failed: ' . var_export($stats, true);
     }
 
 }
