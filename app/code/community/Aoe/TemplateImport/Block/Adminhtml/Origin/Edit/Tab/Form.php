@@ -122,6 +122,16 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Edit_Tab_Form extends Mage_Admin
            )
         );
 
+        $fieldset->addField(
+            'assertions',
+            'textarea',
+            array(
+                'label' => Mage::helper('aoe_templateimport')->__('Assertions'),
+                'name'  => 'assertions',
+                'after_element_html' => '<small>' .Mage::helper('aoe_templateimport')->__('Regex or "marker:markerName" (e.g. marker:content)') . '</small>'
+            )
+        );
+
         $formValues = Mage::registry('current_origin')->getDefaultValues();
         if (!is_array($formValues)) {
             $formValues = array();

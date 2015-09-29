@@ -238,9 +238,13 @@ class Aoe_TemplateImport_Adminhtml_Templateimport_OriginController extends Aoe_T
                     $origin = Mage::getModel('aoe_templateimport/origin'); /* @var $origin Aoe_TemplateImport_Model_Origin */
                     $origin->load($originId);
                     if ($origin->refresh()) {
-                        Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('aoe_templateimport')->__('Origin %d was successfully refreshed.', $origin->getId()));
+                        Mage::getSingleton('adminhtml/session')->addSuccess(
+                            Mage::helper('aoe_templateimport')->__('Origin %d was successfully refreshed.', $origin->getId())
+                        );
                     } else {
-                        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('aoe_templateimport')->__('Error while refreshing origin %d.', $origin->getId()));
+                        Mage::getSingleton('adminhtml/session')->addError(
+                            Mage::helper('aoe_templateimport')->__('Error while refreshing origin %d: %s', $origin->getId(), $origin->getLastError())
+                        );
                     }
                 }
             } catch (Mage_Core_Exception $e) {

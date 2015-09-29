@@ -17,6 +17,7 @@ class Aoe_TemplateImport_Controller_Adminhtml_TemplateImport extends Mage_Adminh
      * @param string $destinationFolder
      * @param array $data
      * @return string
+     * @throws Exception
      * @author Fabrizio Branca
      */
     protected function _uploadAndGetName($input, $destinationFolder, $data)

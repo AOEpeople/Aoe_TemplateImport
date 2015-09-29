@@ -19,18 +19,20 @@
  * @method getStoreId()
  * @method getHttpUsername()
  * @method getHttpPassword()
+ * @method getAssertions()
  *
- * @method setFullActionName()
- * @method setSourceUrl()
- * @method setBaseUrl()
- * @method setPriority()
- * @method setSource()
- * @method setStatus()
- * @method setUpdatedAt()
- * @method setCreatedAt()
- * @method setStoreId()
- * @method setHttpUsername()
- * @method setHttpPassword()
+ * @method setFullActionName($param)
+ * @method setSourceUrl($param)
+ * @method setBaseUrl($param)
+ * @method setPriority($param)
+ * @method setSource($param)
+ * @method setStatus($param)
+ * @method setUpdatedAt($param)
+ * @method setCreatedAt($param)
+ * @method setStoreId($param)
+ * @method setHttpUsername($param)
+ * @method setHttpPassword($param)
+ * @method setAssertions($param)
  */
 class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
 {
@@ -54,6 +56,13 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
      * @var string
      */
     protected $_eventObject = 'origin';
+
+    /**
+     * Last error message
+     *
+     * @var string
+     */
+    protected $lastError;
 
     /**
      * constructor
@@ -95,34 +104,84 @@ class Aoe_TemplateImport_Model_Origin extends Mage_Core_Model_Abstract
 
     /**
      * Fetch origin
+     *
+     * @return bool
      */
     public function refresh()
     {
-        $sourceHelper = Mage::helper('aoe_templateimport/source'); /* @var $sourceHelper Aoe_TemplateImport_Helper_Source */
+        try {
+            $sourceHelper = Mage::helper('aoe_templateimport/source'); /* @var $sourceHelper Aoe_TemplateImport_Helper_Source */
+            $dataHelper = Mage::helper('aoe_templateimport'); /* @var $dataHelper Aoe_TemplateImport_Helper_Data */
 
-        $source = $sourceHelper->fetchSource(
-            Mage::helper('aoe_templateimport')->filter($this->getSourceUrl()),
-            $this->getHttpUsername(),
-            $this->getHttpPassword()
-        );
+            $source = $sourceHelper->fetchSource(
+                $dataHelper->filter($this->getSourceUrl()),
+                $this->getHttpUsername(),
+                $this->getHttpPassword()
+            );
 
-        if (empty($source)) {
+            $this->checkAssertions($source);
+
+            if (empty($source)) {
+                Mage::throwException('Empty source');
+            }
+
+            $source = $sourceHelper->convertRelativePaths(
+                $source,
+                $dataHelper->filter($this->getBaseUrl())
+            );
+
+            $this->setSource($source);
+            $this->setUpdatedAt(Mage::getSingleton('core/date')->gmtDate());
+            $this->save();
+        } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
+            Mage::log('[Aoe_TemplateImport] Error retrieving source for origin: ' . $this->getId() . ' Message: ' . $e->getMessage(),  Zend_Log::ERR);
             return false;
         }
-
-        $source = $sourceHelper->convertRelativePaths(
-            $source,
-            Mage::helper('aoe_templateimport')->filter($this->getBaseUrl())
-        );
-
-        $this->setSource($source);
-        $this->setUpdatedAt(Mage::getSingleton('core/date')->gmtDate());
-        $this->save();
-
         return true;
     }
 
-    public function createClone() {
+    /**
+     * Get last error message
+     *
+     * @return string
+     */
+    public function getLastError()
+    {
+        return $this->lastError;
+    }
+
+    /**
+     * Check assertions
+     *
+     * @param string $source
+     * @throws Exception
+     */
+    public function checkAssertions($source)
+    {
+        $dataHelper = Mage::helper('aoe_templateimport'); /* @var $dataHelper Aoe_TemplateImport_Helper_Data */
+        $sourceHelper = Mage::helper('aoe_templateimport/source'); /* @var $sourceHelper Aoe_TemplateImport_Helper_Source */
+        foreach ($dataHelper->trimExplode("\n", $this->getAssertions(), true) as $assertion) {
+            if (strpos($assertion, 'marker:') === 0) {
+                $marker = trim(substr($assertion, 7));
+                if (!$sourceHelper->markerExists($source, $marker)) {
+                    Mage::throwException('Could not find marker "'.$marker.'"');
+                }
+            } else {
+                if (!preg_match($assertion, $source)) {
+                    Mage::throwException('Pattern "'.$assertion.'" not found');
+                }
+            }
+        }
+    }
+
+    /**
+     * Create clone
+     *
+     * @return Aoe_TemplateImport_Model_Origin
+     */
+    public function createClone()
+    {
         $data = $this->getData();
         unset($data['entity_id']);
         unset($data['updated_at']);

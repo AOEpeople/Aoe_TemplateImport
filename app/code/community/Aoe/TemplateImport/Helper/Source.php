@@ -75,4 +75,16 @@ class Aoe_TemplateImport_Helper_Source extends Mage_Core_Helper_Abstract
         return $source;
     }
 
+    /**
+     * Check if a marker exists in the source
+     *
+     * @param string $source
+     * @param string $marker
+     * @return int
+     */
+    public function markerExists($source, $marker)
+    {
+        return preg_match('/<!--\s*###'.$marker.'###\s*-->(.*)<!--\s*###\/'.$marker.'###\s*-->/s', $source);
+    }
+
 }
