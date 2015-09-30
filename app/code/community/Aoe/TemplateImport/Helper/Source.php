@@ -64,14 +64,14 @@ class Aoe_TemplateImport_Helper_Source extends Mage_Core_Helper_Abstract
         $count = null;
 
         $source = preg_replace_callback('/<!--\s*###(.+)###\s*-->(.*)<!--\s*###\/\1###\s*-->/s', function ($matches) use ($block) {
-            if (Mage::getIsDeveloperMode()) {
-                Mage::log('[Aoe_TemplateImport] Injecting block: ' . $matches[1]);
-            }
+            //if (Mage::getIsDeveloperMode()) {
+            //    Mage::log('[Aoe_TemplateImport] Injecting block: ' . $matches[1]);
+            //}
             return '<!-- BEGIN BLOCK: '.$matches[1].' -->' . $block->getChildHtml($matches[1]) . '<!-- END BLOCK: '.$matches[1].' -->';
         }, $source, -1, $count);
-        if (Mage::getIsDeveloperMode()) {
-            Mage::log('[Aoe_TemplateImport] Match count: ' . $count);
-        }
+        //if (Mage::getIsDeveloperMode()) {
+        //    Mage::log('[Aoe_TemplateImport] Match count: ' . $count);
+        //}
         return $source;
     }
 
