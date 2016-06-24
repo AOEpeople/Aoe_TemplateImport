@@ -95,17 +95,24 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
                 'type'=> 'number',
             )
         );
-        $this->addColumn(
-            'store_id',
-            array(
-                'header'     => Mage::helper('aoe_templateimport')->__('Store Views'),
-                'index'      => 'store_id',
-                'type'       => 'store',
-                'store_all'  => true,
-                'store_view' => true,
-                'sortable'   => false,
-            )
-        );
+        /**
+         * Check is single store mode
+         */
+        if (!Mage::app()->isSingleStoreMode()) {
+            $this->addColumn(
+                'store_id',
+                array(
+                    'header' => Mage::helper('aoe_templateimport')->__('Store Views'),
+                    'index' => 'store_id',
+                    'type' => 'store',
+                    'store_all' => true,
+                    'store_view' => true,
+                    'sortable' => false,
+                    'filter_condition_callback'
+                    => array($this, '_filterStoreCondition'),
+                )
+            );
+        }
         $this->addColumn(
             'updated_at',
             array(
@@ -246,6 +253,15 @@ class Aoe_TemplateImport_Block_Adminhtml_Origin_Grid extends Mage_Adminhtml_Bloc
     {
         $this->getCollection()->walk('afterLoad');
         parent::_afterLoadCollection();
+    }
+
+    protected function _filterStoreCondition($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        $this->getCollection()->addStoreFilter($value);
     }
 
 }
